@@ -1,25 +1,66 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component{
+
+  state = {
+   items : ['Cucumbers', 'Kale']
 }
+
+  render(){
+    
+    return (
+    <div>
+      <GroceryList items = {this.state.items}/>
+    </div>)
+
+  }
+
+}
+
+class GroceryListItem extends React.Component{
+
+  constructor(props){
+    super(props)
+
+    this.state = {
+      done: false
+    };
+
+
+  }
+
+  onMouseOverListItem(e) {
+     this.setState({
+       done: !this.state.done
+     });
+  }
+
+  
+
+
+  render(){
+
+    var style = {
+      fontWeight: this.state.done ? 'bold' : 'normal'
+    };
+
+    return (<li style={style} onMouseOver={this.onMouseOverListItem.bind(this)}>{this.props.item}</li>)
+  }
+
+}
+
+
+var GroceryList = (props) => (
+
+     <ul> 
+       {props.items.map(item => 
+       <GroceryListItem item ={item}/>
+        )} 
+     </ul>
+)
+
+
+
 
 export default App;
